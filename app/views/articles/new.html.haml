@@ -1,0 +1,32 @@
+%h1 Create an article
+- if @article.errors.any?
+  .row
+    .col-xs-8.col-xs-offset-2
+      .panel.panel-danger
+        .panel-heading
+          %h2.panel-title
+            = pluralize(@article.errors.count, "Error")
+            prohibited this article from being saved:
+          .panel-body
+            %ul
+              - @article.errors.full_messages.each do |msg|
+                %li 
+                  =msg
+.row
+  .col-xs-12
+    = form_for(@article, :html => {class: "form-horizontal", role: "form"}) do |f|
+      .form-group
+        .control-label.col-sm-2
+          = f.label :title
+        .col-sm-6
+          = f.text_field :title, class: "form-control", placeholder: "Title of article", autofocus: true
+      .form-group
+        .control-label.col-sm-2
+          = f.label :description
+        .col-sm-6
+          = f.text_area :description, rows: 10, class: "form-control", placeholder: "Body of article"
+      .form-group
+        .col-sm-offset-2.col-sm-2
+          = f.submit class: 'btn btn-primary btn-large'
+        .col-sm-1
+          = link_to 'Back', articles_path
